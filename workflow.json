@@ -1,24 +1,54 @@
 {
-  "name": "example_workflow",
-  "description": "An example workflow",
+  "name": "chatbot_development_workflow",
+  "description": "Workflow for developing a chatbot with a 3-member team",
   "version": 1,
   "tasks": [
     {
-      "name": "task1",
-      "taskReferenceName": "task1_ref",
+      "name": "gather_requirements",
+      "taskReferenceName": "gather_requirements_ref",
       "type": "SIMPLE"
     },
     {
-      "name": "task2",
-      "taskReferenceName": "task2_ref",
+      "name": "design_chatbot",
+      "taskReferenceName": "design_chatbot_ref",
       "type": "SIMPLE",
       "inputParameters": {
-        "param1": "${task1_ref.output}"
-      }
+        "requirements": "${gather_requirements_ref.output}"
+      },
+      "startDelay": 1000
+    },
+    {
+      "name": "implement_chatbot",
+      "taskReferenceName": "implement_chatbot_ref",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "design": "${design_chatbot_ref.output}"
+      },
+      "startDelay": 2000
+    },
+    {
+      "name": "test_chatbot",
+      "taskReferenceName": "test_chatbot_ref",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "chatbot": "${implement_chatbot_ref.output}"
+      },
+      "startDelay": 3000
+    },
+    {
+      "name": "deploy_chatbot",
+      "taskReferenceName": "deploy_chatbot_ref",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "test_results": "${test_chatbot_ref.output}"
+      },
+      "startDelay": 1000
     }
   ],
   "outputParameters": {
-    "result": "${task2_ref.output}"
+    "deployment_status": "${deploy_chatbot_ref.output}"
   },
   "schemaVersion": 2
+}
+
 }
