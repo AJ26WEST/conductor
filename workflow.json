@@ -1,0 +1,24 @@
+{
+  "name": "example_workflow",
+  "description": "An example workflow",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "task1",
+      "taskReferenceName": "task1_ref",
+      "type": "SIMPLE"
+    },
+    {
+      "name": "task2",
+      "taskReferenceName": "task2_ref",
+      "type": "SIMPLE",
+      "inputParameters": {
+        "param1": "${task1_ref.output}"
+      }
+    }
+  ],
+  "outputParameters": {
+    "result": "${task2_ref.output}"
+  },
+  "schemaVersion": 2
+}
